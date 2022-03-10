@@ -9,5 +9,6 @@ namespace ClassLibraryChargingBox.DoorClasses
    public interface IDoor
    {
       event EventHandler<DoorStateChangedEventArgs> DoorStateChangedEvent;
+      void SetDoorState(bool newState);
    }
 }
