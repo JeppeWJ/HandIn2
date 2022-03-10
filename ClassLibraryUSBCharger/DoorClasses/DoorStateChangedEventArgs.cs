@@ -8,6 +8,6 @@ namespace ClassLibraryChargingBox.DoorClasses
 {
    public class DoorStateChangedEventArgs : EventArgs
    {
-      public bool DoorStateChanged { get; set; }
+      public bool DoorState { get; set; }
    }
 }
