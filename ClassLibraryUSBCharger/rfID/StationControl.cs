@@ -6,6 +6,9 @@ namespace ClassLibraryChargingBox.rfID
     public class StationControl
     {
         public bool CurrentDoorState { get; set; }
+        public string CurrentRfid { get; set; }
+
+        private IDoor _door = new Door();
 
         public StationControl(IDoor door, IReader reader)
         {
@@ -28,14 +31,22 @@ namespace ClassLibraryChargingBox.rfID
            
         }
 
-
-        public string CurrentRfid { get; set; }
-
-
         public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
         {
             CurrentRfid = e.Rfid;
             Console.WriteLine("CurrentRFID" + CurrentRfid);
+
+            if (CurrentRfid == "12")
+            {
+                CurrentDoorState = true;
+                
+                Console.WriteLine("Skabet er optaget");
+                _door.LockDoor();
+            }
+            else
+            {
+                CurrentDoorState = false;
+            }
         }
 
 

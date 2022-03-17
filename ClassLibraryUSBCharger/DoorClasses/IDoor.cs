@@ -11,8 +11,8 @@ namespace ClassLibraryChargingBox.DoorClasses
       event EventHandler<DoorStateChangedEventArgs> DoorStateChangedEvent;
       void SetDoorState(bool newState);
 
-      void LockDoor(string iD);
+      void LockDoor();
 
-      void UnlockDoor(string iD);
+      void UnlockDoor();
    }
 }
