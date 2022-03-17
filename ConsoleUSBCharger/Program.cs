@@ -1,4 +1,7 @@
-﻿    using System;
+﻿using System;
+using ClassLibraryChargingBox.ChargerClasses;
+using ClassLibraryChargingBox.DoorClasses;
+using ClassLibraryChargingBox.rfID;
 
 namespace ConsoleUSBCharger
 {
@@ -6,7 +9,8 @@ namespace ConsoleUSBCharger
    {
       static void Main(string[] args)
       {
-         
+        
+
       }
    }
 }
