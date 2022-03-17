@@ -20,7 +20,33 @@ namespace ClassLibraryChargingBox.DoorClasses
          }
       }
 
-      protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs e)
+      public void LockDoor(string ID)
+      {
+          if (ID == "123456")
+          {
+              OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = true});
+          }
+          else
+          {
+              OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = false});
+          }
+
+      }
+
+      public void UnlockDoor(string ID)
+      {
+          if (ID == "123456")
+          {
+              OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorLocked = false });
+          }
+          else
+          {
+              OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorLocked = true });
+          }
+
+      }
+
+        protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs e)
       {
          DoorStateChangedEvent?.Invoke(this, e);
       }
