@@ -7,9 +7,10 @@ namespace ClassLibraryChargingBox.rfID
     {
         public bool CurrentDoorState { get; set; }
 
-        public StationControl(IDoor door)
+        public StationControl(IDoor door, IReader reader)
         {
             door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
+            reader.RfidDetectedEvent += HandleRfidChangedEvent;
         }
 
         private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
@@ -21,22 +22,24 @@ namespace ClassLibraryChargingBox.rfID
             }
             else
             {
-                Console.WriteLine("Døren er nu lukket.");
+                Console.WriteLine("Døren er nu lukket. Indlæs RFID");
             }
+
+           
         }
 
 
         public string CurrentRfid { get; set; }
 
-        public StationControl(IReader reader)
-        {
-            reader.RfidDetectedEvent += HandleRfidChangedEvent;
-        }
 
         public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
         {
             CurrentRfid = e.Rfid;
+            Console.WriteLine("CurrentRFID" + CurrentRfid);
         }
+
+
+
     }
 
 }

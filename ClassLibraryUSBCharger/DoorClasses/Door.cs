@@ -21,16 +21,8 @@ namespace ClassLibraryChargingBox.DoorClasses
       }
 
       public void LockDoor(string ID)
-      {
-          if (ID == "123456")
-          {
-              OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = true});
-          }
-          else
-          {
-              OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = false});
-          }
-
+      { 
+          OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = true});
       }
 
       public void UnlockDoor(string ID)
