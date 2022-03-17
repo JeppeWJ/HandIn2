@@ -1,6 +1,19 @@
-﻿namespace ClassLibraryChargingBox.rfID
+﻿using System;
+
+namespace ClassLibraryChargingBox.rfID
 {
-    class RfidReader
+    public class RfidReader : IReader
     {
+        private string rfid;
+
+        public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
+
+        public void SetRfid(string id)
+        {}
+
+        protected virtual void OnRfidChanged(RfidDetectedEventArgs e)
+        {
+            RfidDetectedEvent?.Invoke(this, e);
+        }
     }
 }
