@@ -11,10 +11,10 @@ namespace ClassLibraryChargingBox.ChargerClasses
       public double CurrentValue { get; set; }
       public ChargeControl(IUsbCharger usbCharger)
       {
-         usbCharger.CurrentValueEvent += CurrentChangedEvent;
+         usbCharger.CurrentValueEvent += HandleCurrentChangedEvent;
       }
 
-      private void CurrentChangedEvent(object sender, CurrentEventArgs e)
+      private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
       {
          CurrentValue = e.Current;
 
