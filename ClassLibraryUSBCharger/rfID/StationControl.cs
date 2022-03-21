@@ -1,4 +1,5 @@
 ﻿using System;
+using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
 
 namespace ClassLibraryChargingBox.rfID
@@ -9,6 +10,7 @@ namespace ClassLibraryChargingBox.rfID
         public string CurrentRfid { get; set; }
 
         private IDoor _door = new Door();
+        private IDisplay display = new Display.Display(); 
 
         public StationControl(IDoor door, IReader reader)
         {
@@ -19,13 +21,14 @@ namespace ClassLibraryChargingBox.rfID
         private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
         {
             CurrentDoorState = e.DoorState;
+
             if (e.DoorState)
             {
-                Console.WriteLine("Døren er nu åben.");
+                display.TilslutOplader();
             }
             else
             {
-                Console.WriteLine("Døren er nu lukket. Indlæs RFID");
+                display.ReadRFID();
             }
 
            
@@ -34,18 +37,19 @@ namespace ClassLibraryChargingBox.rfID
         public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
         {
             CurrentRfid = e.Rfid;
-            Console.WriteLine("CurrentRFID" + CurrentRfid);
+            Console.WriteLine("CurrentRFID " + CurrentRfid);
 
             if (CurrentRfid == "12")
             {
                 CurrentDoorState = true;
                 
-                Console.WriteLine("Skabet er optaget");
+                display.LadeskabOptaget();
                 _door.LockDoor();
             }
             else
             {
                 CurrentDoorState = false;
+
             }
         }
 

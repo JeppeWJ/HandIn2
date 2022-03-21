@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClassLibraryChargingBox.Display;
 
 namespace ClassLibraryChargingBox.ChargerClasses
 {
@@ -13,7 +14,7 @@ namespace ClassLibraryChargingBox.ChargerClasses
       public bool Connected { get; private set; }
       private bool _overload;
       private bool _charging;
-
+      private IDisplay display = new Display.Display();
       public UsbChargerSimulator()
       {
          CurrentValue = 0.0;
@@ -39,6 +40,7 @@ namespace ClassLibraryChargingBox.ChargerClasses
             }
             OnNewCurrent();
             _charging = true;
+
          }
       }
 
@@ -53,6 +55,10 @@ namespace ClassLibraryChargingBox.ChargerClasses
       public void SimulateConnected(bool connected)
       {
          Connected = connected;
+         if (connected == false)
+         {
+                display.Tilslutningsfejl();
+         }
       }
 
       public void SimulateOverload(bool overload)
