@@ -1,6 +1,7 @@
 ﻿using System;
 using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
+using ClassLibraryChargingBox.Logging;
 
 namespace ClassLibraryChargingBox.rfID
 {
@@ -10,7 +11,8 @@ namespace ClassLibraryChargingBox.rfID
         public string CurrentRfid { get; set; }
 
         private IDoor _door = new Door();
-        private IDisplay display = new Display.Display(); 
+        private IDisplay display = new Display.Display();
+        private ILogging _log = new FileLogging();
 
         public StationControl(IDoor door, IReader reader)
         {
@@ -45,6 +47,7 @@ namespace ClassLibraryChargingBox.rfID
                 
                 display.WriteToDisplay("Ladeskabet er optaget");
                 _door.LockDoor();
+                _log.LogDoorLocked(CurrentRfid);
             }
             else
             {
