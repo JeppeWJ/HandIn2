@@ -19,7 +19,7 @@ namespace TestChargingBox
          _uut.DoorStateChangedEvent +=
             (o, args) =>
             {
-               _receivedEventArgs = args;
+               _receivedEventArgs = args;   
             };
       }
 
