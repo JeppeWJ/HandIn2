@@ -15,24 +15,25 @@ namespace ClassLibraryChargingBox.DoorClasses
       {
          if (newState != oldState)
          {
-            OnDoorStateChanged(new DoorStateChangedEventArgs{DoorState = newState});
+            OnDoorStateChanged(new DoorStateChangedEventArgs { DoorState = newState });
             oldState = newState;
+            Console.WriteLine("Døren er åben.");
          }
       }
 
       public void LockDoor()
-      { 
-          OnDoorStateChanged(new DoorStateChangedEventArgs {IsDoorLocked = true});
-          Console.WriteLine("locked");
+      {
+         OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorLocked = true });
+         Console.WriteLine("locked");
       }
 
       public void UnlockDoor()
       {
-          OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorLocked = false });
-          Console.WriteLine("Unlocked");
+         OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorLocked = false });
+         Console.WriteLine("Unlocked");
       }
 
-        protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs e)
+      protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs e)
       {
          DoorStateChangedEvent?.Invoke(this, e);
       }
