@@ -24,11 +24,11 @@ namespace ClassLibraryChargingBox.rfID
 
             if (e.DoorState)
             {
-                display.TilslutOplader();
+                display.WriteToDisplay("Tilslut oplader");
             }
             else
             {
-                display.ReadRFID();
+                display.WriteToDisplay("Indlæs RFID");
             }
 
            
@@ -43,7 +43,7 @@ namespace ClassLibraryChargingBox.rfID
             {
                 CurrentDoorState = true;
                 
-                display.LadeskabOptaget();
+                display.WriteToDisplay("Ladeskabet er optaget");
                 _door.LockDoor();
             }
             else

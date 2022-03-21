@@ -9,35 +9,10 @@ namespace ClassLibraryChargingBox.Display
 {
    public class Display : IDisplay
     {
-        
-        public void TilslutOplader()
+        public string WriteToDisplay(string text)
         {
-            Console.WriteLine("Tilslut oplader");
+            return text;
         }
 
-        public void ReadRFID()
-        {
-            Console.WriteLine("Indlæs RFID");
-        }
-
-        public void Tilslutningsfejl()
-        {
-            Console.WriteLine("Tilslutningsfejl");
-        }
-
-        public void LadeskabOptaget()
-        {
-            Console.WriteLine("Ladeskabet er optaget");
-        }
-
-        public void RFIDFejl()
-        {
-            Console.WriteLine("RFID fejl");
-        }
-
-        public void FjernTelefon()
-        {
-            Console.WriteLine("Fjern telefon");
-        }
     }
 }

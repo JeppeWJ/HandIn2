@@ -57,7 +57,7 @@ namespace ClassLibraryChargingBox.ChargerClasses
          Connected = connected;
          if (connected == false)
          {
-                display.Tilslutningsfejl();
+                display.WriteToDisplay("Tilslutningsfejl");
          }
       }
 
