@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibraryChargingBox.ChargerClasses
 {
-   public class ChargeControl
+   public class ChargeControl : IChargeControl
    {
       public double CurrentValue { get; set; }
       public ChargeControl(IUsbCharger usbCharger)
