@@ -9,9 +9,9 @@ namespace ClassLibraryChargingBox.Display
 {
    public class Display : IDisplay
     {
-        public string WriteToDisplay(string text)
+        public void WriteToDisplay(string text)
         {
-            return text;
+            Console.WriteLine(text);
         }
 
     }

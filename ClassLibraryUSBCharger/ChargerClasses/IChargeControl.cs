@@ -9,6 +9,8 @@ namespace ClassLibraryChargingBox.ChargerClasses
    public interface IChargeControl
    {
       double CurrentValue { get; }
-      
+      bool Connected { get; set; }
+      void StartCharge();
+      void StopCharge();
    }
 }

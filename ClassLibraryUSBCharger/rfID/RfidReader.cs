@@ -16,7 +16,6 @@ namespace ClassLibraryChargingBox.rfID
         protected virtual void OnRfidChanged(RfidDetectedEventArgs e)
         {
             RfidDetectedEvent?.Invoke(this, e);
-            Console.WriteLine("Invoke");
         }
     }
 }

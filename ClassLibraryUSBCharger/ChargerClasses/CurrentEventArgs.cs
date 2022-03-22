@@ -10,5 +10,6 @@ namespace ClassLibraryChargingBox.ChargerClasses
    {
       // Value in mA (milliAmpere)
       public double Current { set; get; }
+      public bool Connected { set; get; }
    }
 }

@@ -9,12 +9,12 @@ namespace ConsoleUSBCharger
    {
       static void Main(string[] args)
       {
-         IDoor door = new Door();
-         IReader rfidReader = new RfidReader();
-         StationControl stationControl = new StationControl(door, rfidReader);
-
          IUsbCharger usbCharger = new UsbChargerSimulator();
          ChargeControl chargeControl = new ChargeControl(usbCharger);
+
+         IDoor door = new Door();
+         IReader rfidReader = new RfidReader();
+         StationControl stationControl = new StationControl(door, rfidReader, chargeControl);
 
          //Man har mulighed for at interagere med 3 ting. Skabsdøren, Rfidlæseren og usb laderen.
 
@@ -49,7 +49,7 @@ namespace ConsoleUSBCharger
                   door.SetDoorState(false);
                   break;
                case 'r':
-                  System.Console.WriteLine("Indtast RFID id: ");
+                  System.Console.WriteLine("Indtast RFID: ");
                   string id = System.Console.ReadLine();
 
                   rfidReader.SetRfid(id);

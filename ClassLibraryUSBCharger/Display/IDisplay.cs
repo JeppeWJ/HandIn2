@@ -8,7 +8,7 @@ namespace ClassLibraryChargingBox.Display
 {
    public interface IDisplay
    {
-       string WriteToDisplay(string text);
+       void WriteToDisplay(string text);
 
     }
 }

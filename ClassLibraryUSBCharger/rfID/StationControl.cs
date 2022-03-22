@@ -1,74 +1,102 @@
 ﻿using System;
+using ClassLibraryChargingBox.ChargerClasses;
 using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
 using ClassLibraryChargingBox.Logging;
 
 namespace ClassLibraryChargingBox.rfID
 {
-    public class StationControl
-    {
-       private enum LadeskabState
-       {
-         Available,
+   public class StationControl
+   {
+      private enum LadeskabState
+      {
+         DoorClosed,
          DoorLocked,
          Dooropen
-       };
-        public bool CurrentDoorState { get; set; }
-        public string CurrentRfid { get; set; }
+      };
+      public bool CurrentDoorState { get; set; }
+      public string CurrentRfid { get; set; }
 
-        private LadeskabState _state;
+      private LadeskabState _state;
 
-        private IDoor _door = new Door();
-        private IDisplay display = new Display.Display();
-        private ILogging _log = new FileLogging();
+      private IDoor _door;
+      private IDisplay display = new Display.Display();
+      private ILogging _log = new FileLogging();
+      private IChargeControl _charger;
+      private IDisplay _display;
 
-        public StationControl(IDoor door, IReader reader)
-        {
-            door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
-            reader.RfidDetectedEvent += HandleRfidChangedEvent;
-            _state = LadeskabState.Available;
-        }
+      public StationControl(IDoor door, IReader reader, IChargeControl charger)
+      {
+         door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
+         reader.RfidDetectedEvent += HandleRfidChangedEvent;
+         _state = LadeskabState.DoorClosed;
 
-        private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
-        {
-            CurrentDoorState = e.DoorState;
+         _display = new Display.Display();
 
-            if (e.DoorState)
-            {
-                display.WriteToDisplay("Tilslut oplader");
-            }
-            else
-            {
-                display.WriteToDisplay("Indlæs RFID");
-            }
+         _charger = charger;
+         _door = door;
+      }
 
-           
-        }
+      private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
+      {
+         CurrentDoorState = e.DoorState;
 
-        public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
-        {
+         if (e.DoorState)
+         {
+            display.WriteToDisplay("Tilslut oplader");
+            _state = LadeskabState.Dooropen;
+         }
+         else
+         {
+            display.WriteToDisplay("Indlæs RFID");
+            _state = LadeskabState.DoorClosed;
+         }
+      }
 
-            CurrentRfid = e.Rfid;
-            Console.WriteLine("CurrentRFID " + CurrentRfid);
+      public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
+      {
+         switch (_state)
+         {
+            case LadeskabState.DoorClosed:
+               if (_charger.Connected)
+               {
+                  _door.LockDoor();
+                  _charger.StartCharge();
+                  CurrentRfid = e.Rfid;
 
-            if (CurrentRfid == "12")
-            {
-                CurrentDoorState = true;
-                
-                display.WriteToDisplay("Ladeskabet er optaget");
-                _door.LockDoor();
-                _log.LogDoorLocked(CurrentRfid);
-            }
-            else
-            {
-                CurrentDoorState = false;
+                  _display.WriteToDisplay("Skabet er nu låst og din telefon lader op.");
 
-            }
-        }
+                  _state = LadeskabState.DoorLocked;
+               }
+               else
+               {
+                  _display.WriteToDisplay("Telefonen er ikke ordentlig tilsluttet.");
+               }
+               break;
+            case LadeskabState.DoorLocked:
+               if (e.Rfid == CurrentRfid) 
+               {
+                  _door.UnlockDoor();
+                  _charger.StopCharge();
+
+                  _display.WriteToDisplay("Skabet er nu åbent. Tag din telefon.");
+
+                  _state = LadeskabState.DoorClosed;
+               }
+               else
+               {
+                  _display.WriteToDisplay("Forkert Rfid");
+               }
+               break;
+            case LadeskabState.Dooropen:
+               break;
+         }
+        
+      }
 
 
 
-    }
+   }
 
 }
 

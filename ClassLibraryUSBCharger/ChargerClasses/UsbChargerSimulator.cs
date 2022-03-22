@@ -55,10 +55,7 @@ namespace ClassLibraryChargingBox.ChargerClasses
       public void SimulateConnected(bool connected)
       {
          Connected = connected;
-         if (connected == false)
-         {
-                display.WriteToDisplay("Tilslutningsfejl");
-         }
+         OnNewCurrent();
       }
 
       public void SimulateOverload(bool overload)
@@ -68,7 +65,7 @@ namespace ClassLibraryChargingBox.ChargerClasses
 
       private void OnNewCurrent()
       {
-         CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
+         CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue, Connected = this.Connected});
       }
    }
 }
