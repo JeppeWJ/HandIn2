@@ -7,8 +7,16 @@ namespace ClassLibraryChargingBox.rfID
 {
     public class StationControl
     {
+       private enum LadeskabState
+       {
+         Available,
+         DoorLocked,
+         Dooropen
+       };
         public bool CurrentDoorState { get; set; }
         public string CurrentRfid { get; set; }
+
+        private LadeskabState _state;
 
         private IDoor _door = new Door();
         private IDisplay display = new Display.Display();
@@ -18,6 +26,7 @@ namespace ClassLibraryChargingBox.rfID
         {
             door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
             reader.RfidDetectedEvent += HandleRfidChangedEvent;
+            _state = LadeskabState.Available;
         }
 
         private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
@@ -38,6 +47,7 @@ namespace ClassLibraryChargingBox.rfID
 
         public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
         {
+
             CurrentRfid = e.Rfid;
             Console.WriteLine("CurrentRFID " + CurrentRfid);
 

@@ -9,6 +9,6 @@ namespace ClassLibraryChargingBox.ChargerClasses
    public interface IChargeControl
    {
       double CurrentValue { get; }
-      void HandleCurrentChangedEvent(object sender, CurrentEventArgs e);
+      
    }
 }
