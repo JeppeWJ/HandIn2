@@ -15,8 +15,7 @@ namespace ClassLibraryChargingBox.DoorClasses
 
       public void SetDoorState(bool newState)
       {
-         if (!_locked)
-         {
+        
             if (newState != oldState)
             {
                OnDoorStateChanged(new DoorStateChangedEventArgs { DoorState = newState });
@@ -31,11 +30,7 @@ namespace ClassLibraryChargingBox.DoorClasses
             {
                Console.WriteLine("Døren er lukket.");
             }
-         }
-         else
-         {
-            Console.WriteLine("Skabet er låst.");
-         }
+        
 
       }
 
