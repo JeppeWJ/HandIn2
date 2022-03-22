@@ -32,23 +32,20 @@ namespace ClassLibraryChargingBox.rfID
          _state = LadeskabState.DoorClosed;
 
          _display = new Display.Display();
-
          _charger = charger;
          _door = door;
       }
 
       private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
       {
-         CurrentDoorState = e.DoorState;
+         CurrentDoorState = e.IsDoorOpen;
 
-         if (e.DoorState)
+         if (e.IsDoorOpen && !e.IsDoorLocked)
          {
-            display.WriteToDisplay("Tilslut oplader");
             _state = LadeskabState.Dooropen;
          }
-         else
+         else if (!e.IsDoorOpen && !e.IsDoorLocked)
          {
-            display.WriteToDisplay("Indlæs RFID");
             _state = LadeskabState.DoorClosed;
          }
       }

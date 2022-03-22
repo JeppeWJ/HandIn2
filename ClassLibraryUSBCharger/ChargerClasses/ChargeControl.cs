@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClassLibraryChargingBox.Display;
 
 namespace ClassLibraryChargingBox.ChargerClasses
 {
@@ -11,11 +12,13 @@ namespace ClassLibraryChargingBox.ChargerClasses
       public double CurrentValue { get; set; }
       public bool Connected { get; set; }
       private IUsbCharger _charger;
+      private IDisplay _display;
 
       public ChargeControl(IUsbCharger usbCharger)
       {
          usbCharger.CurrentValueEvent += HandleCurrentChangedEvent;
          _charger = usbCharger;
+         _display = new Display.Display();
       }
 
       public void StartCharge()

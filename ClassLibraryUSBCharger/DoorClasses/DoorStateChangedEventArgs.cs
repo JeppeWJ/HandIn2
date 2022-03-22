@@ -9,7 +9,7 @@ namespace ClassLibraryChargingBox.DoorClasses
 {
     public class DoorStateChangedEventArgs : EventArgs
     {
-        public bool DoorState { get; set; }
+        public bool IsDoorOpen { get; set; }
 
         public bool IsDoorLocked { get; set; }
     }

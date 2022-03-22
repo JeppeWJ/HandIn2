@@ -34,7 +34,32 @@ namespace TestChargingBox
       public void SetDoorState_StateSet_CorrectStateReceived()
       {
          _uut.SetDoorState(false);
-         Assert.That(_receivedEventArgs.DoorState, Is.False);
+         Assert.That(_receivedEventArgs.IsDoorOpen, Is.False);
+      }
+
+      [Test]
+      public void LockDoor_EventFired()
+      {
+         _uut.LockDoor();
+         Assert.That(_receivedEventArgs, Is.Not.Null);
+      }
+      [Test]
+      public void LockDoor_CorrectEventRecevied()
+      {
+         _uut.LockDoor();
+         Assert.That(_receivedEventArgs.IsDoorLocked, Is.True);
+      }
+      [Test]
+      public void UnlockDoor_EventFired()
+      {
+         _uut.UnlockDoor();
+         Assert.That(_receivedEventArgs, Is.Not.Null);
+      }
+      [Test]
+      public void UnlockDoor_CorrectEventReceived()
+      {
+         _uut.UnlockDoor();
+         Assert.That(_receivedEventArgs.IsDoorLocked, Is.False);
       }
    }
 }
