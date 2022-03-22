@@ -8,8 +8,8 @@ namespace ClassLibraryChargingBox.Logging
 {
     public interface ILogging
     {
-        //void LogDoorLocked(string);
-        //void LogDoorUnlocked(string);
+        void LogDoorLocked(string Id);
+        void LogDoorUnlocked(string Id);
 
 
     }
