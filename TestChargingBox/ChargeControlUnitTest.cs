@@ -29,5 +29,18 @@ namespace TestChargingBox
 
          Assert.That(_uut.CurrentValue, Is.EqualTo(newCurrent));
       }
+
+      [Test]
+      public void StartCharge_CorrectNumberofCallsOnStartChargeCurrentSource()
+      {
+         _uut.StartCharge();
+         _currentSource.Received(1).StartCharge();
+      }
+      [Test]
+      public void StopCharge_CorrectNumberofCallsOnStopChargeCurrentSource()
+      {
+         _uut.StopCharge();
+         _currentSource.Received(1).StopCharge();
+      }
    }
 }
