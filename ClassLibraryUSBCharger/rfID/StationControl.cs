@@ -15,6 +15,7 @@ namespace ClassLibraryChargingBox.rfID
          Dooropen
       };
       public bool CurrentDoorState { get; set; }
+      public bool IsDoorLocked { get; set; }
       public string CurrentRfid { get; set; }
 
       private LadeskabState _state;
@@ -22,23 +23,24 @@ namespace ClassLibraryChargingBox.rfID
       private IDoor _door;
       private IDisplay display = new Display.Display();
       private ILogging _log = new FileLogging();
-      private IChargeControl _charger;
+      private IChargeControl _chargeControl;
       private IDisplay _display;
 
-      public StationControl(IDoor door, IReader reader, IChargeControl charger)
+      public StationControl(IDoor door, IReader reader, IChargeControl chargeControl)
       {
          door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
          reader.RfidDetectedEvent += HandleRfidChangedEvent;
          _state = LadeskabState.DoorClosed;
 
          _display = new Display.Display();
-         _charger = charger;
+         _chargeControl = chargeControl;
          _door = door;
       }
 
       private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
       {
          CurrentDoorState = e.IsDoorOpen;
+         IsDoorLocked = e.IsDoorLocked;
 
          if (e.IsDoorOpen && !e.IsDoorLocked)
          {
@@ -55,10 +57,10 @@ namespace ClassLibraryChargingBox.rfID
          switch (_state)
          {
             case LadeskabState.DoorClosed:
-               if (_charger.Connected)
+               if (_chargeControl.Connected)
                {
                   _door.LockDoor();
-                  _charger.StartCharge();
+                  _chargeControl.StartCharge();
                   CurrentRfid = e.Rfid;
 
                   _display.WriteToDisplay("Skabet er nu låst og din telefon lader op.");
@@ -74,7 +76,7 @@ namespace ClassLibraryChargingBox.rfID
                if (e.Rfid == CurrentRfid) 
                {
                   _door.UnlockDoor();
-                  _charger.StopCharge();
+                  _chargeControl.StopCharge();
 
                   _display.WriteToDisplay("Skabet er nu åbent. Tag din telefon.");
 
