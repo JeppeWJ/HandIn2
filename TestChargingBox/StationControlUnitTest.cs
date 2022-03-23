@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClassLibraryChargingBox.ChargerClasses;
+using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
 using ClassLibraryChargingBox.rfID;
 using NSubstitute;
@@ -17,12 +18,14 @@ namespace TestChargingBox
       private IDoor _doorSource;
       private IReader _rfidSource;
       private IChargeControl _chargeControl;
+      private IDisplay _displaySource;
       [SetUp]
       public void Setup()
       {
          _doorSource = Substitute.For<IDoor>();
          _rfidSource = Substitute.For<IReader>();
          _chargeControl = Substitute.For<IChargeControl>();
+         _displaySource = Substitute.For<IDisplay>();
 
          _uut = new StationControl(_doorSource, _rfidSource, _chargeControl);
       }
@@ -44,7 +47,35 @@ namespace TestChargingBox
          Assert.That(_uut.IsDoorLocked, Is.EqualTo(IsDoorLocked));
       }
 
+     
+      [TestCase("123", "123", true)]
+      public void UnLockDoor_Test(string oldId, string newId, bool charge)
+      {
+          _chargeControl.Connected = charge;
+          _rfidSource.RfidDetectedEvent +=
+              Raise.EventWith(new RfidDetectedEventArgs() { Rfid = oldId});
+          _rfidSource.RfidDetectedEvent +=
+              Raise.EventWith(new RfidDetectedEventArgs() { Rfid = newId });
 
 
-   }
+            _doorSource.Received(1).UnlockDoor();
+          _chargeControl.Received(1).StopCharge();
+          
+      }
+
+      [TestCase("123", "234", true, "Forkert Rfid")]
+      public void UnLockDoorWrongId_Test(string oldId, string newId, bool charge, string text)
+      {
+          _chargeControl.Connected = charge;
+          _rfidSource.RfidDetectedEvent +=
+              Raise.EventWith(new RfidDetectedEventArgs() { Rfid = oldId });
+          _rfidSource.RfidDetectedEvent +=
+              Raise.EventWith(new RfidDetectedEventArgs() { Rfid = newId });
+
+          //IKKE FÆRDIG
+
+
+
+      }
+    }
 }

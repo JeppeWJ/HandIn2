@@ -1,6 +1,8 @@
-﻿namespace ClassLibraryChargingBox.rfID
+﻿using System;
+
+namespace ClassLibraryChargingBox.rfID
 {
-    public class RfidDetectedEventArgs
+    public class RfidDetectedEventArgs : EventArgs
     {
         public string Rfid { get; set; }
 
