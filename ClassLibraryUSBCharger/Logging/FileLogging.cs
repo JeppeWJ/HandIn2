@@ -11,7 +11,7 @@ namespace ClassLibraryChargingBox.Logging
 {
     public class FileLogging : ILogging
     {
-        public List<string> logList;
+        public List<string> logList { get; set; }
         public FileLogging()
         {
             logList = new List<string>();

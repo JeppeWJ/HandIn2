@@ -45,10 +45,12 @@ namespace ClassLibraryChargingBox.rfID
          if (e.IsDoorOpen && !e.IsDoorLocked)
          {
             _state = LadeskabState.Dooropen;
+            _display.WriteToDisplay("Tilslut telefon");
          }
          else if (!e.IsDoorOpen && !e.IsDoorLocked)
          {
             _state = LadeskabState.DoorClosed;
+            _display.WriteToDisplay("Indlæs RFID");
          }
       }
 

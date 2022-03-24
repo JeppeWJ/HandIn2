@@ -27,14 +27,14 @@ namespace ClassLibraryChargingBox.DoorClasses
                oldState = newState;
             }
 
-            if (newState == true && !IsDoorLocked)
-            {
-               Console.WriteLine("Døren er åben.");
-            }
-            else if (newState == false && !IsDoorLocked)
-            {
-               Console.WriteLine("Døren er lukket.");
-            }
+            //if (newState == true && !IsDoorLocked)
+            //{
+            //   Console.WriteLine("Døren er åben.");
+            //}
+            //else if (newState == false && !IsDoorLocked)
+            //{
+            //   Console.WriteLine("Døren er lukket.");
+            //}
         
 
       }
