@@ -32,7 +32,7 @@ namespace TestChargingBox
             
 
             _uut.LogDoorLocked(toLog);
-            _uut.
+            _uut.logList
 
             //var result =_testLogList.Last();
             

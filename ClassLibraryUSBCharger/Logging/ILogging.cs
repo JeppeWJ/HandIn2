@@ -10,7 +10,7 @@ namespace ClassLibraryChargingBox.Logging
     {
         void LogDoorLocked(string Id);
         void LogDoorUnlocked(string Id);
-
+        List<string> logList { get; set; }
 
     }
 }
