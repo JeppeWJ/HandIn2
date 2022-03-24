@@ -2,6 +2,7 @@
 using ClassLibraryChargingBox.ChargerClasses;
 using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
+using ClassLibraryChargingBox.Logging;
 using ClassLibraryChargingBox.rfID;
 
 namespace ConsoleUSBCharger
@@ -14,11 +15,12 @@ namespace ConsoleUSBCharger
          IReader rfidReader = new RfidReader();
          IDisplay display = new Display();
          IUsbCharger usbCharger = new UsbChargerSimulator();
+         ILogging log = new FileLogging();
 
          ChargeControl chargeControl = new ChargeControl(usbCharger, display);
 
          
-         StationControl stationControl = new StationControl(door, rfidReader, chargeControl, display);
+         StationControl stationControl = new StationControl(door, rfidReader, chargeControl, display, log);
 
          //Man har mulighed for at interagere med 3 ting. Skabsdøren, Rfidlæseren og usb laderen.
 

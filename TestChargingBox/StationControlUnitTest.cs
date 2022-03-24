@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClassLibraryChargingBox.ChargerClasses;
 using ClassLibraryChargingBox.Display;
 using ClassLibraryChargingBox.DoorClasses;
+using ClassLibraryChargingBox.Logging;
 using ClassLibraryChargingBox.rfID;
 using NSubstitute;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace TestChargingBox
       private IReader _rfidSource;
       private IChargeControl _chargeControl;
       private IDisplay _displaySource;
+      private ILogging _logging;
       [SetUp]
       public void Setup()
       {
@@ -26,8 +28,9 @@ namespace TestChargingBox
          _rfidSource = Substitute.For<IReader>();
          _chargeControl = Substitute.For<IChargeControl>();
          _displaySource = Substitute.For<IDisplay>();
+         _logging = Substitute.For<ILogging>();
 
-         _uut = new StationControl(_doorSource, _rfidSource, _chargeControl, _displaySource);
+         _uut = new StationControl(_doorSource, _rfidSource, _chargeControl, _displaySource, _logging);
       }
 
       [TestCase(true)]
