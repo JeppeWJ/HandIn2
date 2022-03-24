@@ -40,8 +40,6 @@ namespace ClassLibraryChargingBox.rfID
 
       private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
       {
-         CurrentDoorState = e.IsDoorOpen;
-         IsDoorLocked = e.IsDoorLocked;
 
          if (e.IsDoorOpen && !e.IsDoorLocked)
          {
@@ -51,8 +49,13 @@ namespace ClassLibraryChargingBox.rfID
          else if (!e.IsDoorOpen && !e.IsDoorLocked)
          {
             _state = LadeskabState.DoorClosed;
-            _display.WriteToDisplay("Indlæs RFID");
+            if (e.IsDoorOpen != CurrentDoorState)
+            {
+               _display.WriteToDisplay("Indlæs RFID");
+            }
          }
+         CurrentDoorState = e.IsDoorOpen;
+         IsDoorLocked = e.IsDoorLocked;
       }
 
       public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
