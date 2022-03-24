@@ -27,7 +27,7 @@ namespace TestChargingBox
          _chargeControl = Substitute.For<IChargeControl>();
          _displaySource = Substitute.For<IDisplay>();
 
-         _uut = new StationControl(_doorSource, _rfidSource, _chargeControl);
+         _uut = new StationControl(_doorSource, _rfidSource, _chargeControl, _displaySource);
       }
 
       [TestCase(true)]
@@ -48,8 +48,8 @@ namespace TestChargingBox
       }
 
      
-      [TestCase("123", "123", true)]
-      public void UnLockDoor_Test(string oldId, string newId, bool charge)
+      [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
+      public void UnLockDoor_Test(string oldId, string newId, bool charge, string text)
       {
           _chargeControl.Connected = charge;
           _rfidSource.RfidDetectedEvent +=
@@ -60,8 +60,9 @@ namespace TestChargingBox
 
             _doorSource.Received(1).UnlockDoor();
           _chargeControl.Received(1).StopCharge();
-          
-      }
+          _displaySource.Received(1).WriteToDisplay(text);
+
+        }
 
       [TestCase("123", "234", true, "Forkert Rfid")]
       public void UnLockDoorWrongId_Test(string oldId, string newId, bool charge, string text)
@@ -72,9 +73,8 @@ namespace TestChargingBox
           _rfidSource.RfidDetectedEvent +=
               Raise.EventWith(new RfidDetectedEventArgs() { Rfid = newId });
 
-          //IKKE FÆRDIG
-
-
+           
+            _displaySource.Received(1).WriteToDisplay(text);
 
       }
     }

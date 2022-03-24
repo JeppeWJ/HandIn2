@@ -26,13 +26,13 @@ namespace ClassLibraryChargingBox.rfID
       private IChargeControl _chargeControl;
       private IDisplay _display;
 
-      public StationControl(IDoor door, IReader reader, IChargeControl chargeControl)
+      public StationControl(IDoor door, IReader reader, IChargeControl chargeControl, IDisplay display)
       {
          door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
          reader.RfidDetectedEvent += HandleRfidChangedEvent;
          _state = LadeskabState.DoorClosed;
 
-         _display = new Display.Display();
+         _display = display;
          _chargeControl = chargeControl;
          _door = door;
       }
@@ -84,7 +84,8 @@ namespace ClassLibraryChargingBox.rfID
                }
                else
                {
-                  _display.WriteToDisplay("Forkert Rfid");
+                  // _door.UnlockDoor();
+                   _display.WriteToDisplay("Forkert Rfid");
                }
                break;
             case LadeskabState.Dooropen:
