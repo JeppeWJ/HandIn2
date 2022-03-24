@@ -27,28 +27,6 @@ namespace ClassLibraryChargingBox.Logging
             logList.Add(Id);
         }
 
-        
-
-        
-
-        //Tidligere kode...
-        //private StringBuilder _sb;
-        //public void LogDoorLocked(string Id)
-        //{
-        //    _sb = new StringBuilder();
-        //    _sb.Append(Id);
-        //    File.AppendAllText("Log.txt", _sb+" ");
-        //    _sb.Clear();
-        //}
-        //public void LogDoorUnlocked(string Id)
-        //{
-        //    _sb.Append(Id);
-        //    File.AppendAllText("Log.txt", _sb+" ");
-        //    _sb.Clear();
-        //}
-
-
-
 
     }
 }
