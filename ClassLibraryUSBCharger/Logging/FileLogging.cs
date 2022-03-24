@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,21 +11,43 @@ namespace ClassLibraryChargingBox.Logging
 {
     public class FileLogging : ILogging
     {
-        private StringBuilder _sb;
+        public List<string> logList;
+        public FileLogging()
+        {
+            logList = new List<string>();
+        }
 
         public void LogDoorLocked(string Id)
         {
-            _sb = new StringBuilder();
-            _sb.Append(Id);
-            File.AppendAllText("Log.txt", _sb+" ");
-            _sb.Clear();
+            logList.Add(Id);
         }
+
         public void LogDoorUnlocked(string Id)
         {
-            _sb.Append(Id);
-            File.AppendAllText("Log.txt", _sb+" ");
-            _sb.Clear();
+            logList.Add(Id);
         }
+
+        //Gem i en lokal container og tjek at denne indeholder det der  bliver placeret i den.
+        //Assert input lig container.contains.
+
+
+        //private StringBuilder _sb;
+        //public void LogDoorLocked(string Id)
+        //{
+        //    _sb = new StringBuilder();
+        //    _sb.Append(Id);
+        //    File.AppendAllText("Log.txt", _sb+" ");
+        //    _sb.Clear();
+        //}
+        //public void LogDoorUnlocked(string Id)
+        //{
+        //    _sb.Append(Id);
+        //    File.AppendAllText("Log.txt", _sb+" ");
+        //    _sb.Clear();
+        //}
+
+
+
 
     }
 }

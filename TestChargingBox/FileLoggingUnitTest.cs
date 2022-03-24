@@ -14,26 +14,44 @@ namespace TestChargingBox
     public class FileLoggingUnitTest
     {
         
-        private ILogging _logging;
+        private ILogging _uut;
+        //private List<string> _testLogList;
 
         [SetUp]
         public void SetUp()
         {
-            
-            _logging = Substitute.For<ILogging>();
+            //_testLogList = new List<string>();
+            _uut = new FileLogging();
         }
 
         [Test]
-        public void TestFileLoggingIsCalled()
+
+        [TestCase("12345")]
+        public void TestFileLoggingIsCalled(string toLog)
         {
+            
+
+            _uut.LogDoorLocked(toLog);
+            _uut.
+
+            //var result =_testLogList.Last();
+            
+
+            Assert.AreEqual(toLog,result);
+
+
+
+
+
             //Jeg ved ikke hvordan vi skal teste det her med logging
             //korrekt/bedst. Jeg har fundet et løsningsforslag til en
             //doorControl, hvor Frank tester på nedenstående måde om
             //en metode er kaldt med Substitude
 
-            _logging.LogDoorLocked("");
-            _logging.Received(1).LogDoorLocked("");
-            
+            //_logging.LogDoorLocked("");
+            //_logging.Received(1).LogDoorLocked("");
+
+
         }
     }
 }
