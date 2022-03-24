@@ -27,30 +27,30 @@ namespace TestChargingBox
         [Test]
 
         [TestCase("12345")]
-        public void TestFileLoggingIsCalled(string toLog)
+        public void TestLogDoorLocked(string toLog)
         {
             
 
             _uut.LogDoorLocked(toLog);
-            _uut.logList
-
-            //var result =_testLogList.Last();
+            var result = _uut.logList.Last();
             
 
             Assert.AreEqual(toLog,result);
 
 
-
-
-
-            //Jeg ved ikke hvordan vi skal teste det her med logging
-            //korrekt/bedst. Jeg har fundet et løsningsforslag til en
-            //doorControl, hvor Frank tester på nedenstående måde om
-            //en metode er kaldt med Substitude
-
+            //Tidligere kode...
             //_logging.LogDoorLocked("");
             //_logging.Received(1).LogDoorLocked("");
 
+
+        }
+        [TestCase("123456")]
+        public void TestLogDoorUnlocked(string toLog)
+        {
+            _uut.LogDoorUnlocked(toLog);
+            var result = _uut.logList.Last();
+
+            Assert.AreEqual(toLog,result);
 
         }
     }

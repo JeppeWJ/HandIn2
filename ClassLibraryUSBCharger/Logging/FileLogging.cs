@@ -11,7 +11,9 @@ namespace ClassLibraryChargingBox.Logging
 {
     public class FileLogging : ILogging
     {
-        public List<string> logList;
+
+        public List<string> logList { get; set; }
+
         public FileLogging()
         {
             logList = new List<string>();
@@ -27,10 +29,11 @@ namespace ClassLibraryChargingBox.Logging
             logList.Add(Id);
         }
 
-        //Gem i en lokal container og tjek at denne indeholder det der  bliver placeret i den.
-        //Assert input lig container.contains.
+        
 
+        
 
+        //Tidligere kode...
         //private StringBuilder _sb;
         //public void LogDoorLocked(string Id)
         //{
