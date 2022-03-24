@@ -22,11 +22,11 @@ namespace ClassLibraryChargingBox.rfID
 
       private IDoor _door;
       private IDisplay display = new Display.Display();
-      private ILogging _log = new FileLogging();
+      private ILogging _log;
       private IChargeControl _chargeControl;
       private IDisplay _display;
 
-      public StationControl(IDoor door, IReader reader, IChargeControl chargeControl, IDisplay display)
+      public StationControl(IDoor door, IReader reader, IChargeControl chargeControl, IDisplay display, ILogging log)
       {
          door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
          reader.RfidDetectedEvent += HandleRfidChangedEvent;
@@ -35,6 +35,7 @@ namespace ClassLibraryChargingBox.rfID
          _display = display;
          _chargeControl = chargeControl;
          _door = door;
+         _log = log;
       }
 
       private void HandleDoorStateChangedEvent(object sender, DoorStateChangedEventArgs e)
@@ -62,6 +63,8 @@ namespace ClassLibraryChargingBox.rfID
                if (_chargeControl.Connected)
                {
                   _door.LockDoor();
+                  _log.LogDoorLocked(e.Rfid);
+
                   _chargeControl.StartCharge();
                   CurrentRfid = e.Rfid;
 
@@ -78,6 +81,7 @@ namespace ClassLibraryChargingBox.rfID
                if (e.Rfid == CurrentRfid) 
                {
                   _door.UnlockDoor();
+                  _log.LogDoorUnlocked(e.Rfid);
                   _chargeControl.StopCharge();
 
                   _display.WriteToDisplay("Skabet er nu åbent. Tag din telefon.");
