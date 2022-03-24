@@ -14,11 +14,11 @@ namespace ClassLibraryChargingBox.ChargerClasses
       private IUsbCharger _charger;
       private IDisplay _display;
 
-      public ChargeControl(IUsbCharger usbCharger)
+      public ChargeControl(IUsbCharger usbCharger, IDisplay display)
       {
          usbCharger.CurrentValueEvent += HandleCurrentChangedEvent;
          _charger = usbCharger;
-         _display = new Display.Display();
+         _display = display;
       }
 
       public void StartCharge()
@@ -35,6 +35,11 @@ namespace ClassLibraryChargingBox.ChargerClasses
       {
          CurrentValue = e.Current;
          Connected = e.Connected;
+
+         if (CurrentValue > 500)
+         {
+            _display.WriteToDisplay("Ladefejl! Stop straks opladning!");
+         }
       }
    }
 }

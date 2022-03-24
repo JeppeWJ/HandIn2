@@ -10,12 +10,14 @@ namespace ConsoleUSBCharger
    {
       static void Main(string[] args)
       {
-         IUsbCharger usbCharger = new UsbChargerSimulator();
-         ChargeControl chargeControl = new ChargeControl(usbCharger);
-
          IDoor door = new Door();
          IReader rfidReader = new RfidReader();
          IDisplay display = new Display();
+         IUsbCharger usbCharger = new UsbChargerSimulator();
+
+         ChargeControl chargeControl = new ChargeControl(usbCharger, display);
+
+         
          StationControl stationControl = new StationControl(door, rfidReader, chargeControl, display);
 
          //Man har mulighed for at interagere med 3 ting. Skabsdøren, Rfidlæseren og usb laderen.

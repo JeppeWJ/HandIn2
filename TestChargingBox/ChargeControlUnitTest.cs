@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClassLibraryChargingBox.ChargerClasses;
+using ClassLibraryChargingBox.Display;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -13,11 +14,13 @@ namespace TestChargingBox
    {
       private ChargeControl _uut;
       private IUsbCharger _currentSource;
+      private IDisplay _display;
       [SetUp]
       public void Setup()
       {
          _currentSource = Substitute.For<IUsbCharger>();
-         _uut = new ChargeControl(_currentSource);
+         _display = Substitute.For<IDisplay>();
+         _uut = new ChargeControl(_currentSource, _display);
       }
 
       [TestCase(0)]
@@ -28,6 +31,13 @@ namespace TestChargingBox
          _currentSource.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs {Current = newCurrent});
 
          Assert.That(_uut.CurrentValue, Is.EqualTo(newCurrent));
+      }
+
+      [Test]
+      public void CurrentChanged_Overload()
+      {
+         _currentSource.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() {Current = 700});
+         _display.Received(1).WriteToDisplay("Ladefejl! Stop straks opladning!");
       }
 
       [Test]
