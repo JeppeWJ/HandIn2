@@ -35,6 +35,11 @@ namespace ClassLibraryChargingBox.ChargerClasses
       {
          CurrentValue = e.Current;
          Connected = e.Connected;
+
+         if (CurrentValue > 500)
+         {
+            _display.WriteToDisplay("Ladefejl! Stop straks opladning!");
+         }
       }
    }
 }
