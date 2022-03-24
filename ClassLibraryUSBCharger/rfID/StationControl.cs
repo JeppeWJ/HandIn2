@@ -58,7 +58,7 @@ namespace ClassLibraryChargingBox.rfID
          IsDoorLocked = e.IsDoorLocked;
       }
 
-      public void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
+      private void HandleRfidChangedEvent(object s, RfidDetectedEventArgs e)
       {
          switch (_state)
          {

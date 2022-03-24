@@ -80,7 +80,7 @@ namespace TestChargingBox
 
 
 
-        [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
+      [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
       public void UnLockDoor_Test(string oldId, string newId, bool charge, string text)
       {
           _chargeControl.Connected = charge;
