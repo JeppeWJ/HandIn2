@@ -47,24 +47,9 @@ namespace TestChargingBox
          Assert.That(_uut.IsDoorLocked, Is.EqualTo(IsDoorLocked));
       }
 
-      //case LadeskabState.DoorClosed:
-      //if (_chargeControl.Connected)
-      //{
-      //    _door.LockDoor();
-      //    _chargeControl.StartCharge();
-      //    CurrentRfid = e.Rfid;
-
-      //    _display.WriteToDisplay("Skabet er nu låst og din telefon lader op.");
-
-      //    _state = LadeskabState.DoorLocked;
-      //}
-      //else
-      //{
-      //    _display.WriteToDisplay("Telefonen er ikke ordentlig tilsluttet.");
-      //}
 
       [TestCase(true, true, "Skabet er nu låst og din telefon lader op.", "123")]
-      public void LadeskabLukket_ChargeControlConnected_test(bool charge, bool isDoorLocked, string text, string Rfid  )
+      public void LadeskabLukket_ChargeConnected_test(bool charge, bool isDoorLocked, string text, string Rfid  )
       {
           _uut.IsDoorLocked = isDoorLocked;
           _chargeControl.Connected = charge;
@@ -78,12 +63,19 @@ namespace TestChargingBox
             _displaySource.WriteToDisplay(text);
       }
 
-      [TestCase()]
+      [TestCase(false, true, "Telefonen er ikke ordentlig tilsluttet.", "123")]
 
-      public void LadeskabLukket_ChargeControlNotConnected_test()
+      public void LadeskabLukket_ChargeNotConnected_test(bool charge, bool isDoorLocked, string text, string Rfid)
       {
+          _uut.IsDoorLocked = isDoorLocked;
+          _chargeControl.Connected = charge;
+          _rfidSource.RfidDetectedEvent +=
+              Raise.EventWith(new RfidDetectedEventArgs() { Rfid = Rfid });
 
-      }
+            _displaySource.WriteToDisplay(text);
+        }
+
+
 
         [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
       public void UnLockDoor_Test(string oldId, string newId, bool charge, string text)
