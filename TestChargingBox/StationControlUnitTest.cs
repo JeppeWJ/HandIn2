@@ -41,6 +41,17 @@ namespace TestChargingBox
             Raise.EventWith(new DoorStateChangedEventArgs() {IsDoorOpen = IsDoorOpen});
          Assert.That(_uut.CurrentDoorState, Is.EqualTo(IsDoorOpen));
       }
+      [Test]
+      public void DoorStateChanged_ClosedAfterBeingOpen()
+      {
+         _doorSource.DoorStateChangedEvent +=
+            Raise.EventWith(new DoorStateChangedEventArgs() { IsDoorOpen = true });
+
+         _doorSource.DoorStateChangedEvent +=
+            Raise.EventWith(new DoorStateChangedEventArgs() { IsDoorOpen = false });
+
+         _displaySource.Received(1).WriteToDisplay("Indlæs RFID");
+      }
       [TestCase(true)]
       [TestCase(false)]
       public void DoorLockedandUnlocked_CorrectStateReceived(bool IsDoorLocked)
