@@ -26,10 +26,11 @@ namespace ClassLibraryChargingBox.rfID
       private IChargeControl _chargeControl;
       private IDisplay _display;
 
+
       public StationControl(IDoor door, IReader reader, IChargeControl chargeControl, IDisplay display, ILogging log)
       {
          door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
-         reader.RfidDetectedEvent += HandleRfidChangedEvent;
+         reader.RfidDetectedEvent += HandleRfidChangedEvent;    
          _state = LadeskabState.DoorClosed;
 
          _display = display;
