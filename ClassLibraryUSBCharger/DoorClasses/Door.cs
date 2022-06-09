@@ -21,7 +21,7 @@ namespace ClassLibraryChargingBox.DoorClasses
       public void SetDoorState(bool newState)
       {
         
-            if (newState != oldState)
+            if (newState != oldState )
             {
                OnDoorStateChanged(new DoorStateChangedEventArgs { IsDoorOpen = newState, IsDoorLocked = IsDoorLocked});
                oldState = newState;

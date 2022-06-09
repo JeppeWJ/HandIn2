@@ -41,6 +41,17 @@ namespace TestChargingBox
             Raise.EventWith(new DoorStateChangedEventArgs() {IsDoorOpen = IsDoorOpen});
          Assert.That(_uut.CurrentDoorState, Is.EqualTo(IsDoorOpen));
       }
+      [Test]
+      public void DoorStateChanged_ClosedAfterBeingOpen()
+      {
+         _doorSource.DoorStateChangedEvent +=
+            Raise.EventWith(new DoorStateChangedEventArgs() { IsDoorOpen = true });
+
+         _doorSource.DoorStateChangedEvent +=
+            Raise.EventWith(new DoorStateChangedEventArgs() { IsDoorOpen = false });
+
+         _displaySource.Received(1).WriteToDisplay("Indlæs RFID");
+      }
       [TestCase(true)]
       [TestCase(false)]
       public void DoorLockedandUnlocked_CorrectStateReceived(bool IsDoorLocked)
@@ -81,7 +92,7 @@ namespace TestChargingBox
 
 
 
-        [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
+      [TestCase("123", "123", true, "Skabet er nu åbent. Tag din telefon.")]
       public void UnLockDoor_Test(string oldId, string newId, bool charge, string text)
       {
           _chargeControl.Connected = charge;
