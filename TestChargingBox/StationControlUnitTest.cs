@@ -51,6 +51,7 @@ namespace TestChargingBox
       }
 
 
+
       [TestCase(true, true, "Skabet er nu låst og din telefon lader op.", "123")]
       public void LadeskabLukket_ChargeConnected_test(bool charge, bool isDoorLocked, string text, string Rfid  )
       {
